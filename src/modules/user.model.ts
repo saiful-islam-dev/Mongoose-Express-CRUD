@@ -1,4 +1,4 @@
-import { Schema } from 'mongoose';
+import { Schema, model } from 'mongoose';
 import { TAddress, TFullName, TOrrder, TUser } from './users/user.interface';
 
 const fullNameSchema = new Schema<TFullName>({
@@ -47,7 +47,7 @@ const ordersSchema = new Schema<TOrrder>({
 const userSchema = new Schema<TUser>({
   userId: {
     type: Number,
-    required: [true, 'Student ID is required'],
+    // required: [true, 'Student ID is required'],
     unique: true,
   },
   username: {
@@ -60,7 +60,7 @@ const userSchema = new Schema<TUser>({
     required: true,
   },
   fullName: {
-    firstName: fullNameSchema,
+    type: fullNameSchema,
     required: true,
   },
   age: {
@@ -84,3 +84,5 @@ const userSchema = new Schema<TUser>({
   },
   orders: [ordersSchema],
 });
+
+export const UserModel = model<TUser>('User', userSchema);
