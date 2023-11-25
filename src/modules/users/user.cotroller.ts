@@ -78,48 +78,47 @@ const deleteSingleUser = async (req: Request, res: Response) => {
   }
 };
 
-// const updateSingleUser = async (req: Request, res: Response) => {
-//   try {
-//     const { userId } = req.params;
-//     const userIdNum = parseFloat(userId);
-//     const updateData = req.body;
-//     const checkUserExists = await UserModel.isUserExists(userIdNum);
+const updateSingleUser = async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.params;
+    const updateData = req.body;
+    const checkUserExists = await UserServices.getSingleuserFromDB(userId);
 
-//     if (!checkUserExists) {
-//       return res.status(404).json({
-//         success: false,
-//         message: 'User not found',
-//         error: {
-//           code: 404,
-//           description: 'User not found!',
-//         },
-//       });
-//     }
+    if (!checkUserExists) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found',
+        error: {
+          code: 404,
+          description: 'User not found!',
+        },
+      });
+    }
 
-//     const result = await UserService.updateSingleUserFromDB(
-//       userIdNum,
-//       updateData,
-//     );
+    const result = await UserServices.updateSingleUserFromDB(
+      userId,
+      updateData,
+    );
 
-//     res.status(200).json({
-//       success: true,
-//       message: 'User update Successfully',
-//       data: result,
-//     });
-//     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-//   } catch (err: any) {
-//     res.status(500).json({
-//       success: false,
-//       message: err.message,
-//       error: err,
-//     });
-//   }
-// };
+    res.status(200).json({
+      success: true,
+      message: 'User update Successfully',
+      data: result,
+    });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (err: any) {
+    res.status(500).json({
+      success: false,
+      message: err.message,
+      error: err,
+    });
+  }
+};
 
 export const UserControllers = {
   user,
   getaAllUsers,
   getSingleUser,
   deleteSingleUser,
-  //   updateSingleUser,
+  updateSingleUser,
 };
