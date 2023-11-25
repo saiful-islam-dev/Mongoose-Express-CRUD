@@ -10,8 +10,7 @@ app.use(cors());
 app.use('/api', UserRoute);
 
 app.get('/', (req: Request, res: Response) => {
-  const a = 10;
-  res.send(`Hello World ${a}`);
+  res.send(`Hello World!`);
 });
 
 export default app;
