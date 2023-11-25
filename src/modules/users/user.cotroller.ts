@@ -46,7 +46,25 @@ const getSingleUser = async (req: Request, res: Response) => {
     const result = await UserServices.getSingleuserFromDB(userId);
     res.status(200).json({
       success: true,
-      message: 'User created successfully!',
+      message: 'User fetched successfully!',
+      data: result,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'User not found',
+      error: error,
+    });
+  }
+};
+
+const deleteSingleUser = async (req: Request, res: Response) => {
+  try {
+    const { userId } = req.params;
+    const result = await UserServices.deleteAUserFromDB(userId);
+    res.status(200).json({
+      success: true,
+      message: 'User deleted successfully!',
       data: result,
     });
   } catch (error) {
@@ -62,4 +80,5 @@ export const UserControllers = {
   user,
   getaAllUsers,
   getSingleUser,
+  deleteSingleUser,
 };
